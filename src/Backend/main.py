@@ -2,6 +2,8 @@ from typing import Union
 
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.security import OAuth2PasswordBearer
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
 import uuid
@@ -12,15 +14,25 @@ SECRET_KEY = "your_secret_key"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
+origins = [
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # Allows requests from the specified origin
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allows all headers
+)
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
-
+class LoginRequest(BaseModel):
+    nickname: str
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
@@ -28,13 +40,12 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
-
-
 @app.post("/login/anonymous")
-async def anonymous_login(nickname: Union[str, None] = None):
-  user_id = str(uuid.uuid4())  # Generate a unique anonymous user ID
-  access_token = create_access_token({"sub": user_id, "nickname": nickname})
-  return {"access_token": access_token, "token_type": "bearer"}
+async def anonymous_login(request: LoginRequest):
+    user_id = str(uuid.uuid4())  # Generate a unique user ID
+    access_token = create_access_token({"sub": user_id, "nickname": request.nickname})
+    return {"access_token": access_token, "token_type": "bearer"}
+
 # Simple authentication dependency for secured endpoints
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login/anonymous")
 

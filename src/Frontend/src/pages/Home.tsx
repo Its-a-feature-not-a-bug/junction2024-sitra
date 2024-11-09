@@ -34,9 +34,29 @@ const Home: React.FC = () => {
         </>
       ) : (
         <>
-          <Typography variant="h3" color="white" fontWeight={500}>
-            Discover new discussions and engage in converersations
-          </Typography>
+          <Box
+            sx={{
+              marginTop: 5,
+              display: 'flex',
+              flexDirection: 'row',
+              gap: 4,
+            }}
+          >
+            <Typography
+              variant="h3"
+              color="white"
+              fontWeight={500}
+              sx={{ marginTop: 3 }}
+            >
+              Discover new discussions and engage in converersations
+            </Typography>
+            <Paper
+              component="img"
+              src="/img/people.webp"
+              alt="People"
+              sx={{ flexGrow: 1, width: '50%' }}
+            />
+          </Box>
           <Button variant="contained" onClick={() => navigate('/login')}>
             Login
           </Button>

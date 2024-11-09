@@ -32,7 +32,7 @@ const Home: React.FC = () => {
       ) : (
         <Container>
           <Typography variant="h5">
-            Welcome! Please login to use this app. test auto deploy
+            Welcome! Please login to use this app. test auto deploy 2
           </Typography>
           <Button variant="contained" onClick={() => navigate("/login")}>
             Login

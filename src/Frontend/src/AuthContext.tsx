@@ -10,6 +10,7 @@ interface AuthContextType {
   token: string | null;
   setToken: (token: string) => void;
   loginAnonymous: () => Promise<void>;
+  logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -38,9 +39,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     localStorage.setItem('token', newToken);
   };
 
+  const logout = () => {
+    setToken(null);
+    localStorage.removeItem('token');
+  };
+
   return (
     <AuthContext.Provider
-      value={{ token, setToken: setAndStoreToken, loginAnonymous }}
+      value={{
+        token,
+        setToken: setAndStoreToken,
+        loginAnonymous,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>

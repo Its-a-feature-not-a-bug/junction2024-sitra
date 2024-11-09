@@ -3,6 +3,8 @@ services:
     name: junction2024-sitra-frontend
     buildCommand: cd src/Frontend && npm install && npm run build-render
     staticPublishPath: ./src/Frontend/dist
+    branch: deployment
+    autoDeploy: true
     envVars:
       - key: VITE_API_URL
         value: "https://junction2024-sitra-backend.onrender.com"

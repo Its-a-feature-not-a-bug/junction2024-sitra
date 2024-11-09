@@ -21,27 +21,26 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <h1>Welcome to the Home Page</h1>
+    <Container sx={{ padding: 2 }}>
       {nickname ? (
-        <Container>
+        <>
           <Typography variant="h5">
             Hello, {nickname}! Welcome to the app.
           </Typography>
           <Logout />
-        </Container>
+        </>
       ) : (
-        <Container>
-          <Typography variant="h5">
-            Welcome! Please login to use this app.
+        <>
+          <Typography variant="h3" color="white" fontWeight={500}>
+            Discover new discussions and engage in converersations
           </Typography>
           <Button variant="contained" onClick={() => navigate('/login')}>
             Login
           </Button>
-        </Container>
+        </>
       )}
       <CreateConversation />
-    </div>
+    </Container>
   );
 };
 

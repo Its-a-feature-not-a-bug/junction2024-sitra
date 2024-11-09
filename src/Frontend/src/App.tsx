@@ -10,17 +10,19 @@ const App: React.FC = () => {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Layout />,
-      children: [
-        {
-          path: '',
-          element: <Home />,
-        },
-        {
-          path: 'login',
-          element: <Login />,
-        },
-      ],
+      element: (
+        <Layout>
+          <Home />
+        </Layout>
+      ),
+    },
+    {
+      path: '/login',
+      element: (
+        <Layout>
+          <Login />
+        </Layout>
+      ),
     },
   ]);
 

@@ -1,3 +1,9 @@
+import requests
+
+print(requests.__version__)
+
+
+
 from typing import Union
 
 from fastapi import FastAPI, HTTPException, Depends
@@ -9,6 +15,8 @@ from datetime import datetime, timedelta
 import uuid
 from database import engine, database, metadata
 from models import conversations
+
+
 
 metadata.create_all(bind=engine)
 app = FastAPI()
@@ -87,3 +95,46 @@ class ConversationCreate(BaseModel):
 async def create_conversation(conversation: ConversationCreate, current_user: dict = Depends(get_current_user)):
   query = conversations.insert().values(name=conversation.name, creator_id=current_user["user_id"], creator_nickname=current_user["nickname"] )
   return await database.execute(query)
+
+import os
+import requests
+from fastapi import FastAPI, HTTPException, Request
+from pydantic import BaseModel
+from dotenv import load_dotenv
+
+load_dotenv()
+
+VITE_SITE_SECRET = os.getenv("VITE_SITE_SECRET")
+
+app = FastAPI()
+
+class CaptchaResponse(BaseModel):
+    captchaValue: str
+
+def verify_recaptcha(captcha_value: str) -> bool:
+    url = 'https://www.google.com/recaptcha/api/siteverify'
+    data = {
+        'secret': VITE_SITE_SECRET,
+        'response': captcha_value
+    }
+
+    response = requests.post(url, data=data)
+    result = response.json()
+    
+    return result.get('success', False)
+
+@app.post("/verify")
+async def verify(request: CaptchaResponse):
+    captcha_value = request.captchaValue
+    
+    
+    is_valid = verify_recaptcha(captcha_value)
+    
+    if is_valid:
+        return {"success": True, "message": "reCAPTCHA validation succeeded!"}
+    else:
+        raise HTTPException(status_code=400, detail="reCAPTCHA validation failed")
+
+@app.get("/")
+async def root():
+    return {"message": "reCAPTCHA Verification Service Running"}

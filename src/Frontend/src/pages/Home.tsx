@@ -22,44 +22,29 @@ const Home: React.FC = () => {
 
   return (
     <Container sx={{ padding: 2 }}>
+    <Container sx={{ padding: 2 }}>
       {nickname ? (
+        <>
         <>
           <Typography variant="h5">
             Hello, {nickname}! Welcome to the app.
           </Typography>
           <Logout />
         </>
+        </>
       ) : (
         <>
-          <Box
-            sx={{
-              marginTop: 5,
-              display: 'flex',
-              flexDirection: 'row',
-              gap: 4,
-            }}
-          >
-            <Typography
-              variant="h3"
-              color="white"
-              fontWeight={500}
-              sx={{ marginTop: 3 }}
-            >
-              Discover new discussions and engage in converersations
-            </Typography>
-            <Paper
-              component="img"
-              src="/img/people.webp"
-              alt="People"
-              sx={{ flexGrow: 1, width: '50%' }}
-            />
-          </Box>
+          <Typography variant="h3" color="white" fontWeight={500}>
+            Discover new discussions and engage in converersations
+          </Typography>
           <Button variant="contained" onClick={() => navigate('/login')}>
             Login
           </Button>
         </>
+        </>
       )}
       <CreateConversation />
+    </Container>
     </Container>
   );
 };

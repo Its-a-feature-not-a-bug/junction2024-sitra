@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useAuth } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
+import api from '../axiosConfig';
 import ReCAPTCHA from 'react-google-recaptcha'
 
 const Login: React.FC = () => {
@@ -15,10 +15,9 @@ const Login: React.FC = () => {
       return;
     }
     try {
-      const response = await axios.post(
-        'http://localhost:8000/login/anonymous',
-        { nickname }
-      );
+      const response = await api.post('/login/anonymous', {
+        nickname,
+      });
       const accessToken = response.data.access_token;
       setToken(accessToken); // Store the token in AuthContext
       navigate('/'); // Redirect to the main page

@@ -4,6 +4,11 @@
 
 ### Backend Setup
 
+1. Navigate to the backend directory:
+```bash
+cd src/Backend
+```
+
 1. Create a virtual environment:
 ```bash
 python3 -m venv venv
@@ -16,12 +21,17 @@ source venv/bin/activate
 
 3. Install the backend dependencies:
 ```bash
-pip install -r src/Backend/requirements.txt
+pip install -r requirements.txt
 ```
 
 4. Run the backend server:
 ```bash
-fastapi dev src/Backend/main.py
+fastapi dev main.py
+```
+
+### .env file inside of src/Backend should look like:
+```
+DATABASE_URL=mysql+asyncmy://username:password@url:port/database
 ```
 
 ### Frontend Setup
@@ -41,6 +51,12 @@ npm install
 npm run dev
 ```
 
+### .env file inside of src/Frontend should look like:
+```
+VITE_API_URL=http://localhost:8000
+```
+
 ## Tech Stack
 - Frontend: React + TypeScript + Vite
 - Backend: FastAPI + Python
+- Database: MySQL

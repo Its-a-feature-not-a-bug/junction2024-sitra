@@ -109,7 +109,7 @@ def verify_recaptcha(captcha_value: str) -> bool:
 
     response = requests.post(url, data=data)
     result = response.json()
-    
+
     return result.get('success', False)
 
 @app.post("/verify")

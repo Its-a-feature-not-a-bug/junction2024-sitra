@@ -1,15 +1,35 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useAuth } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
 import api from '../axiosConfig';
 import ReCAPTCHA from 'react-google-recaptcha'
 
 const Login: React.FC = () => {
+  const recaptcha = useRef<ReCAPTCHA | null>(null)
   const [nickname, setNickname] = useState<string>('');
   const { setToken } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async () => {
+    const captchaValue = recaptcha.current?.getValue()
+    if (!captchaValue) {
+      alert('Please verify the reCAPTCHA!')
+      return;
+    } else {
+      const res = await api.post('/verify', {
+        captchaValue: captchaValue,
+      });
+    
+      if (res.data.success) {
+        // make form submission
+        alert('Form submission successful!')
+      } else {
+        alert('reCAPTCHA validation failed!')
+      }
+    }
+
+
+
     if (!nickname.trim()) {
       alert('Nickname is required!');
       return;
@@ -26,8 +46,6 @@ const Login: React.FC = () => {
     }
   };
 
-  console.log("sitekey", import.meta.env.VITE_RECAPTCHA_SITE_KEY)
-
   return (
     <div>
       <h1>Anonymous Login</h1>
@@ -40,7 +58,7 @@ const Login: React.FC = () => {
         />
       </label>
       <button onClick={handleLogin}>Login</button>
-      <ReCAPTCHA sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY} />
+      <ReCAPTCHA ref={recaptcha} sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY} />
     </div>
   );
 };

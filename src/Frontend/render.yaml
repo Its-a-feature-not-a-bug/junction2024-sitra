@@ -1,7 +1,7 @@
 services:
   - type: web
     name: junction2024-sitra-frontend
-    buildCommand: cd src/Frontend && npm install && npm run build
+    buildCommand: cd src/Frontend && npm install && npm run build-render
     staticPublishPath: ./src/Frontend/dist
     envVars:
       - key: VITE_API_URL

@@ -1,9 +1,9 @@
-import React from "react";
-import { jwtDecode } from "jwt-decode";
-import { useAuth } from "../AuthContext";
-import { Button, Container, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import Logout from "../components/Logout/Logout";
+import React from 'react';
+import { jwtDecode } from 'jwt-decode';
+import { useAuth } from '../AuthContext';
+import { Button, Container, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import Logout from '../components/Logout/Logout';
 
 // Define the type for the JWT payload
 interface JwtPayload {
@@ -32,9 +32,9 @@ const Home: React.FC = () => {
       ) : (
         <Container>
           <Typography variant="h5">
-            Welcome! Please login to use this app. test auto deploy 2
+            Welcome! Please login to use this app.
           </Typography>
-          <Button variant="contained" onClick={() => navigate("/login")}>
+          <Button variant="contained" onClick={() => navigate('/login')}>
             Login
           </Button>
         </Container>

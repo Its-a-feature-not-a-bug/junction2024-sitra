@@ -18,7 +18,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 origins = [
     "http://localhost:5173",
-    "hhttps://junction2024-sitra-backend.onrender.com",  # Your frontend Render URL
+    "https://junction2024-sitra-backend.onrender.com",  # Your frontend Render URL
  ]
  
 app.add_middleware(

@@ -5,4 +5,4 @@ services:
     staticPublishPath: ./src/Frontend/dist
     envVars:
       - key: VITE_API_URL
-        value: "https://your-backend-url.onrender.com"
+        value: "https://junction2024-sitra-backend.onrender.com"

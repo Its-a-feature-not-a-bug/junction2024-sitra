@@ -14,10 +14,8 @@ const Login: React.FC = () => {
       return;
     }
     try {
-      const response = await axios.post(
-        'http://localhost:8000/login/anonymous',
-        { nickname }
-      );
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/login/anonymous`, { nickname });
+      // const response = await axios.post('http://localhost:8000/login/anonymous', { nickname });
       const accessToken = response.data.access_token;
       setToken(accessToken); // Store the token in AuthContext
       navigate('/'); // Redirect to the main page

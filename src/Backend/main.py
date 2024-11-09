@@ -14,10 +14,13 @@ SECRET_KEY = "your_secret_key"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
+ 
+
 origins = [
     "http://localhost:5173",
-]
-
+    "hhttps://junction2024-sitra-backend.onrender.com",  # Your frontend Render URL
+ ]
+ 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,  # Allows requests from the specified origin

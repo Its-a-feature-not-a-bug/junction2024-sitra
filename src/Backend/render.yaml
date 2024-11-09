@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: junction2024-sitra-backend
+    runtime: python
+    buildCommand: cd src/Backend && pip install -r requirements.txt
+    startCommand: cd src/Backend && uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0

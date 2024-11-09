@@ -1,5 +1,5 @@
 import requests
-from typing import Union
+from typing import Union, Dict
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.security import OAuth2PasswordBearer
 from fastapi.middleware.cors import CORSMiddleware
@@ -8,7 +8,7 @@ from jose import JWTError, jwt
 from datetime import datetime, timedelta
 import uuid
 from database import engine, database, metadata
-from models import conversations
+from models import conversations, messages
 import os
 from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
@@ -88,12 +88,54 @@ async def get_conversations():
 class ConversationCreate(BaseModel):
     name: str
 
+class MessageCreate(BaseModel):
+    content: str
+
 @app.post("/conversations") # send name in body
 async def create_conversation(conversation: ConversationCreate, current_user: dict = Depends(get_current_user)):
   query = conversations.insert().values(name=conversation.name, creator_id=current_user["user_id"], creator_nickname=current_user["nickname"] )
   return await database.execute(query)
 
+@app.get("/conversations/{conversation_id}", response_model=Dict)
+async def get_conversation(conversation_id: int):
+    query = conversations.select().where(conversations.c.id == conversation_id)
+    conversation_exists = await database.fetch_all(query)
 
+    if not conversation_exists:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+
+    query = messages.select().where(messages.c.conversation_id == conversation_id)
+    conversation_data = await database.fetch_all(query)
+
+    return conversation_data
+
+@app.post("/conversations/{conversation_id}/messages", response_model=MessageCreate)
+async def send_message_to_conversation(
+    conversation_id: int,
+    message: MessageCreate,
+    current_user: dict = Depends(get_current_user),  # Getting current user from the request
+):
+    # Check if the conversation exists
+    query =  conversations.select().where(conversations.c.id == conversation_id)
+    conversation = await database.fetch_one(query)
+    
+    if not conversation:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+    
+    # Insert the new message into the messages table
+    query = (
+        messages.insert()
+        .values(
+            conversation_id=conversation_id,
+            user_id=current_user["user_id"],
+            content=message.content,
+        )
+    )
+    message_id = await database.execute(query)
+    
+    # Return the created message as confirmation (with an auto-generated ID)
+
+    
 SITE_SECRET = os.getenv("SITE_SECRET")
 
 

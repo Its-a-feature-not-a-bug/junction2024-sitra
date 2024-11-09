@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { useAuth } from '../../AuthContext';
+import api from '../../axiosConfig';
 
 const CreateConversation = () => {
   const [conversationName, setConversationName] = useState('');
@@ -8,8 +8,8 @@ const CreateConversation = () => {
   console.log({ token });
   const handleCreateConversation = async () => {
     try {
-      await axios.post(
-        'http://localhost:8000/conversations',
+      await api.post(
+        '/conversations',
         {
           name: conversationName,
         },

@@ -12,7 +12,7 @@ Install the dependencies:
 Run the server:
 ```fastapi dev main.py```
 
-### What .env file should look like:
+###  .env file inside of src/Backend should look like:
 ```
 DATABASE_URL=mysql+asyncmy://username:password@url:port/database
 ```

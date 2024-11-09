@@ -1,5 +1,5 @@
 from database import metadata
-from sqlalchemy import Table, Column, Integer, String, TIMESTAMP, func
+from sqlalchemy import ForeignKey, Table, Column, Integer, String, TIMESTAMP, Text, func
 
 conversations = Table(
   "conversations",
@@ -13,4 +13,15 @@ conversations = Table(
   Column("created_at", TIMESTAMP, server_default=func.now()),
   # Updated_at timestamp with current timestamp on update
   Column("updated_at", TIMESTAMP, server_default=func.now(), onupdate=func.now()),
+)
+
+messages = Table(
+    'messages', metadata,
+    Column('id', Integer, primary_key=True, autoincrement=True),
+    Column('conversation_id', Integer, nullable=False),
+    Column('user_id', Integer, nullable=False),
+    Column('user_nickname', Integer, nullable=False),
+    Column('content', Text, nullable=False),
+    Column('media_url', Text, nullable=True),
+    Column('timestamp', TIMESTAMP, default=func.now()),
 )

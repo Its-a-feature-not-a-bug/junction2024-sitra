@@ -1,7 +1,7 @@
 venv
 __pycache__
 .DS_Store
-
+deploy.sh
 .venv
 .env
 node_modules

@@ -7,7 +7,10 @@ from pydantic import BaseModel
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
 import uuid
+from database import engine, database, metadata
+from models import conversations
 
+metadata.create_all(bind=engine)
 app = FastAPI()
 
 SECRET_KEY = "your_secret_key"
@@ -25,6 +28,13 @@ app.add_middleware(
     allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
     allow_headers=["*"],  # Allows all headers
 )
+@app.on_event("startup")
+async def startup():
+    await database.connect()
+
+@app.on_event("shutdown")
+async def shutdown():
+    await database.disconnect()
 
 @app.get("/")
 def read_root():
@@ -53,13 +63,27 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         user_id: str = payload.get("sub")
-        if user_id is None:
+        nickname: str = payload.get("nickname")
+        if user_id is None or nickname is None:
             raise HTTPException(status_code=401, detail="Invalid token")
     except JWTError:
         raise HTTPException(status_code=401, detail="Could not validate credentials")
-    return {"user_id": user_id}
+    return {"user_id": user_id, "nickname": nickname}
 
 
 @app.get("/protected-route")
 async def protected_route(current_user: dict = Depends(get_current_user)):
     return {"message": f"Hello, user {current_user['user_id']}"}
+
+@app.get("/conversations")
+async def get_conversations():
+    query = conversations.select()
+    return await database.fetch_all(query)
+
+class ConversationCreate(BaseModel):
+    name: str
+
+@app.post("/conversations") # send name in body
+async def create_conversation(conversation: ConversationCreate, current_user: dict = Depends(get_current_user)):
+  query = conversations.insert().values(name=conversation.name, creator_id=current_user["user_id"], creator_nickname=current_user["nickname"] )
+  return await database.execute(query)

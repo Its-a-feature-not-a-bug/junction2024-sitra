@@ -4,6 +4,7 @@ import { useAuth } from '../AuthContext';
 import { Button, Container, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Logout from '../components/Logout/Logout';
+import CreateConversation from '../components/CreateConversation/CreateConversation';
 
 // Define the type for the JWT payload
 interface JwtPayload {
@@ -39,6 +40,7 @@ const Home: React.FC = () => {
           </Button>
         </Container>
       )}
+      <CreateConversation />
     </div>
   );
 };

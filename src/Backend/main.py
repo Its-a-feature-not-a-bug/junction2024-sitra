@@ -13,7 +13,7 @@ app = FastAPI()
 
 origins = [
     "http://localhost:5173",
-    "https://junction2024-sitra-frontend.onrender.com/"
+    "https://junction2024-sitra-frontend.onrender.com"
 ]
 
 app.add_middleware(

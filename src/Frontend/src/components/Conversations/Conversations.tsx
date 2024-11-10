@@ -8,22 +8,27 @@ import {
   Paper,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { Conversation } from '../../interfaces/conversation';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { setConversation } from '../../redux/slices/conversationSlice';
 
 const Conversations = () => {
-  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const dispatch = useDispatch();
+  const conversations = useSelector(
+    (state: RootState) => state.conversation.conversations
+  );
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchConversations = async () => {
+    const fetchConversationsData = async () => {
       const response = await api.get('/api/conversations');
-      setConversations(response.data);
-      setLoading(false);
+      dispatch(setConversation(response.data));
     };
-    fetchConversations();
-  }, []);
+    fetchConversationsData();
+    setLoading(false);
+  }, [dispatch]);
 
   return (
     <Box>
@@ -35,19 +40,24 @@ const Conversations = () => {
       ) : (
         <Grid container spacing={2}>
           {conversations.map((conversation) => (
-            <Grid size={{ xs: 12, md: 6, lg: 4 }}>
+            <Grid size={{ xs: 12, md: 6, lg: 4 }} key={conversation.id}>
               <Paper
                 onClick={() => navigate(`/conversation/${conversation.id}`)}
                 sx={{
                   cursor: 'pointer',
-                  padding: 4,
-                  minHeight: 100,
+                  padding: 3,
+                  minHeight: 130,
                   background: 'rgb(50,50,50)',
                   borderRadius: 8,
                   color: 'white',
                 }}
               >
                 <Typography variant="h6">{conversation.title}</Typography>
+                <Typography variant="body2">
+                  {conversation.description.length < 100
+                    ? conversation.description
+                    : `${conversation.description.slice(0, 100)}...`}
+                </Typography>
               </Paper>
             </Grid>
           ))}

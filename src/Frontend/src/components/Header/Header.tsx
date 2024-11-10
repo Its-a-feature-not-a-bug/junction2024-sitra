@@ -11,7 +11,7 @@ const Header = () => {
           padding: '20px 40px',
           display: 'flex',
           flexDirection: 'row',
-          background: '#202020',
+          background: 'rgb(22,22,22)',
           boxShadow: 'none',
           justifyContent: 'space-between',
           alignItems: 'center',

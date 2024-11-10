@@ -1,11 +1,11 @@
-import React from "react";
-import { jwtDecode } from "jwt-decode";
-import { useAuth } from "../AuthContext";
-import { Box, Button, Container, Paper, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import Logout from "../components/Logout/Logout";
-import CreateConversation from "../components/CreateConversation/CreateConversation";
-import Conversations from "../components/Conversations/Conversations";
+import React from 'react';
+import { jwtDecode } from 'jwt-decode';
+import { useAuth } from '../AuthContext';
+import { Box, Button, Container, Paper, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import Logout from '../components/Logout/Logout';
+import CreateConversation from '../components/CreateConversation/CreateConversation';
+import Conversations from '../components/Conversations/Conversations';
 
 // Define the type for the JWT payload
 interface JwtPayload {
@@ -23,57 +23,52 @@ const Home: React.FC = () => {
 
   return (
     <Container sx={{ padding: 2 }}>
-      {nickname ? (
-        <>
-          <Typography variant="h5">
-            Hello, {nickname}! Welcome to the FairVoice platform!
-          </Typography>
-          <Logout />
-        </>
-      ) : (
-        <>
-          <Box
-            sx={{
-              marginTop: 5,
-              marginBottom: 5,
-              display: "flex",
-              flexDirection: "row",
-              gap: 4,
-            }}
+      <Box
+        sx={{
+          marginTop: 5,
+          marginBottom: 5,
+          display: 'flex',
+          flexDirection: 'row',
+          gap: 4,
+        }}
+      >
+        <Box>
+          <Typography
+            variant="h3"
+            color="white"
+            fontWeight={500}
+            sx={{ marginTop: 3 }}
+            fontSize={42}
+            marginBottom={4}
           >
-            <Box>
-              <Typography
-                variant="h3"
-                color="white"
-                fontWeight={500}
-                sx={{ marginTop: 3 }}
-                fontSize={42}
-                marginBottom={4}
-              >
-                Discover New Discussions Fully Anonymously
-              </Typography>
-              <Button
-                variant="contained"
-                onClick={() => navigate("/login")}
-                sx={{
-                  borderRadius: "18px",
-                  padding: "8px 35px",
-                  textTransform: "none",
-                }}
-              >
-                Login Anonymously
-              </Button>
-            </Box>
-            <Paper
-              component="img"
-              src="/img/people.webp"
-              alt="People"
-              sx={{ flexGrow: 1, width: "50%" }}
-            />
-          </Box>
-        </>
-      )}
-      <CreateConversation />
+            {nickname
+              ? `Welcome, ${nickname}! Let's start discussing!`
+              : 'Discover new discussions fully anonymously!'}
+          </Typography>
+          {!nickname ? (
+            <Button
+              variant="contained"
+              onClick={() => navigate('/login')}
+              sx={{
+                borderRadius: '18px',
+                padding: '8px 35px',
+                textTransform: 'none',
+              }}
+            >
+              Login anonymously
+            </Button>
+          ) : (
+            <CreateConversation />
+          )}
+        </Box>
+        <Paper
+          component="img"
+          src="/img/people.webp"
+          alt="People"
+          sx={{ flexGrow: 1, width: '50%' }}
+        />
+      </Box>
+
       <Conversations />
     </Container>
   );

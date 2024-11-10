@@ -11,7 +11,6 @@ app = FastAPI()
 
 # Define allowed origins
 origins = [
-    "*",
     "http://localhost:5173",
     "https://junction2024-sitra-frontend.onrender.com",
 ]
@@ -19,7 +18,7 @@ origins = [
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow specified origins
+    allow_origins=origins,  # Allow specified origins
     allow_credentials=True,
     allow_methods=["*"],  # Allow all HTTP methods
     allow_headers=["*"],  # Allow all headers

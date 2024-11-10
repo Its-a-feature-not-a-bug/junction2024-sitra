@@ -20,9 +20,9 @@ load_dotenv()
 metadata.create_all(bind=engine)
 app = FastAPI()
 
-SECRET_KEY = "your_secret_key"
+SECRET_KEY = os.getenv("JWT_SECRET")
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+ACCESS_TOKEN_EXPIRE_MINUTES = 1440
 
  
 

@@ -99,7 +99,7 @@ const Modal = styled(BaseModal)`
 `;
 
 const ModalContent = styled('div')(
-  ({ theme }) => css`
+  () => css`
     font-weight: 500;
     text-align: start;
     position: relative;

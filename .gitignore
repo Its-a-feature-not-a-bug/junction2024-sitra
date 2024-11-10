@@ -4,4 +4,6 @@ __pycache__
 deploy.sh
 .venv
 .env
-node_modulesnode_modules
+1.env
+node_modules
+run.sh

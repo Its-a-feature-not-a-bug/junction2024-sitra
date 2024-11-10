@@ -50,13 +50,22 @@ const Conversations = () => {
                   background: 'rgb(50,50,50)',
                   borderRadius: 8,
                   color: 'white',
+                  height: 'calc(100% - 50px)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
                 }}
               >
-                <Typography variant="h6">{conversation.title}</Typography>
-                <Typography variant="body2">
-                  {conversation.description.length < 100
-                    ? conversation.description
-                    : `${conversation.description.slice(0, 100)}...`}
+                <Box>
+                  <Typography variant="h6">{conversation.title}</Typography>
+                  <Typography variant="body2">
+                    {conversation.description.length < 100
+                      ? conversation.description
+                      : `${conversation.description.slice(0, 100)}...`}
+                  </Typography>
+                </Box>
+                <Typography variant="caption" align="right">
+                  Open
                 </Typography>
               </Paper>
             </Grid>

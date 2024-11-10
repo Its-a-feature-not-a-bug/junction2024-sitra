@@ -1,0 +1,22 @@
+name: Deploy to Render
+
+on:
+  push:
+    branches:
+      - deployment  # or your default branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Deploy to Render
+      env:
+        RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        BACKEND_SERVICE_ID: ${{ secrets.BACKEND_SERVICE_ID }}
+        FRONTEND_SERVICE_ID: ${{ secrets.FRONTEND_SERVICE_ID }}
+      run: |
+        chmod +x ./deploy.sh
+        ./deploy.sh

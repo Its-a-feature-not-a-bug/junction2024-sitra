@@ -3,7 +3,6 @@ import { jwtDecode } from 'jwt-decode';
 import { useAuth } from '../AuthContext';
 import { Box, Button, Container, Paper, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Logout from '../components/Logout/Logout';
 import CreateConversation from '../components/CreateConversation/CreateConversation';
 import Conversations from '../components/Conversations/Conversations';
 

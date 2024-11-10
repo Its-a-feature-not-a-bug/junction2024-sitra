@@ -19,16 +19,21 @@ const Conversation = () => {
   const { conversation_id } = useParams<{ conversation_id: string }>();
   const { token } = useAuth();
 
-  const loadMessages = () => {
-    api.get(`/api/conversations/${conversation_id}`).then((data) => {
-      setMessages(data.data);
-      setLoading(false);
-    });
-  };
-
   useEffect(() => {
+    const loadMessages = () => {
+      api.get(`/api/conversations/${conversation_id}`).then((data) => {
+        setMessages(data.data);
+        setLoading(false);
+      });
+    };
     loadMessages();
   }, [conversation_id]);
+
+  const refreshMessages = () => {
+    api.get(`/api/conversations/${conversation_id}`).then((data) => {
+      setMessages(data.data);
+    });
+  };
 
   return (
     <Container>
@@ -70,7 +75,7 @@ const Conversation = () => {
                   )
                   .then(() => {
                     setSendMessage('');
-                    loadMessages();
+                    refreshMessages();
                   });
               }}
             >

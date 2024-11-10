@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import api from '../../axiosConfig';
 import {
+  Box,
   CircularProgress,
-  Container,
   List,
   ListItem,
   ListItemText,

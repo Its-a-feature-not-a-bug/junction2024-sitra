@@ -5,5 +5,5 @@ export interface Message {
   user_nickname: string;
   content: string;
   media_url: string;
-  timestamp: Date;
+  timestamp: string;
 }

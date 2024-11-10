@@ -45,6 +45,16 @@ async def create_conversation(conversation: ConversationCreate, current_user: di
 @router.get("/conversations/{conversation_id}", tags=["conversations"])
 async def get_conversation(conversation_id: int):
     query = conversations.select().where(conversations.c.id == conversation_id)
+    conversation = await database.fetch_one(query)
+
+    if not conversation:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+
+    return conversation
+
+@router.get("/conversations/{conversation_id}/messages", tags=["conversations"])
+async def get_conversation_messages(conversation_id: int):
+    query = conversations.select().where(conversations.c.id == conversation_id)
     conversation_exists = await database.fetch_all(query)
 
     if not conversation_exists:

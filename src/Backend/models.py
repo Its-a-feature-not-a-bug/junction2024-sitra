@@ -24,4 +24,8 @@ messages = Table(
     Column('content', Text, nullable=False),
     Column('media_url', Text, nullable=True),
     Column('timestamp', TIMESTAMP, default=func.now()),
+    Column('anger_score', Integer, nullable=True),
+    Column('emotional_intensity_score', Integer, nullable=True),
+    Column('bias_score', Integer, nullable=True),
+    Column('score_reason', Text, nullable=True),
 )

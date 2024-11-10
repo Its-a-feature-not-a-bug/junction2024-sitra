@@ -17,7 +17,7 @@ const CreateConversation = () => {
   const handleCreateConversation = async () => {
     try {
       await api.post(
-        '/conversations',
+        '/api/conversations',
         {
           name: conversationName,
         },

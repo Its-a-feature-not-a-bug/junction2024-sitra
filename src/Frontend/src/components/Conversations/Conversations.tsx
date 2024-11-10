@@ -27,8 +27,10 @@ const Conversations = () => {
   }, []);
 
   return (
-    <Container>
-      <Typography variant="h4">Conversations</Typography>
+    <Box>
+      <Typography variant="h4" sx={{ fontWeight: 500, marginBottom: 2 }}>
+        Featured onversations
+      </Typography>
       {loading ? (
         <CircularProgress />
       ) : (
@@ -44,7 +46,7 @@ const Conversations = () => {
           ))}
         </List>
       )}
-    </Container>
+    </Box>
   );
 };
 

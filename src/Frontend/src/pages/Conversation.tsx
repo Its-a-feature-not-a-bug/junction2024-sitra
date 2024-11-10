@@ -58,7 +58,7 @@ const Conversation = () => {
               onClick={() => {
                 api
                   .post(
-                    `/conversations/${conversation_id}`,
+                    `/api/conversations/${conversation_id}`,
                     {
                       content: sendMessage,
                     },

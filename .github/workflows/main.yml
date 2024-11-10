@@ -15,8 +15,8 @@ jobs:
     - name: Deploy to Render
       env:
         RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
-        BACKEND_SERVICE_ID: ${{ secrets.BACKEND_SERVICE_ID }}
-        FRONTEND_SERVICE_ID: ${{ secrets.FRONTEND_SERVICE_ID }}
+        BACKEND_SRV: ${{ secrets.BACKEND_SRV }}
+        FRONTEND_SRV: ${{ secrets.FRONTEND_SRV }}
       run: |
         chmod +x ./deploy.sh
         ./deploy.sh

@@ -8,20 +8,14 @@ import {
   styled,
   TextField,
 } from '@mui/material';
-import { setConversation } from '../../redux/slices/conversationSlice';
-import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const CreateConversation = () => {
   const [open, setOpen] = useState(false);
   const [conversationName, setConversationName] = useState('');
   const [description, setDescription] = useState('');
   const { token } = useAuth();
-  const dispatch = useDispatch();
-
-  const updateConversationList = async () => {
-    const response = await api.get('/api/conversations');
-    dispatch(setConversation(response.data));
-  };
+  const navigate = useNavigate();
 
   const handleCreateConversation = async () => {
     if (conversationName.trim().length < 3) {
@@ -29,7 +23,7 @@ const CreateConversation = () => {
       return;
     }
     try {
-      await api.post(
+      const id = await api.post(
         '/api/conversations',
         {
           title: conversationName.trim(),
@@ -41,10 +35,7 @@ const CreateConversation = () => {
           },
         }
       );
-      setConversationName('');
-      setDescription('');
-      setOpen(false);
-      updateConversationList();
+      navigate('/conversation/' + id.data);
     } catch (error) {
       console.error(error);
     }

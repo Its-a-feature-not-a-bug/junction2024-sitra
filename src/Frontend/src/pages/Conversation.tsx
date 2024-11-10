@@ -13,6 +13,7 @@ import api from '../axiosConfig';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { Conversation } from '../interfaces/conversation';
+import MessageCard from '../components/MessageCard/MessageCard';
 
 const ConversationPage = () => {
   const [loading, setLoading] = useState(true);
@@ -70,23 +71,7 @@ const ConversationPage = () => {
           </Paper>
           <Box sx={{ mt: 2 }}>
             {messages.map((message) => (
-              <Paper
-                sx={{
-                  background: 'rgb(50,50,50)',
-                  p: 3,
-                  borderRadius: 10,
-                  mb: 2,
-                }}
-                key={message.id}
-              >
-                <Typography color="white" fontWeight={700} fontSize={20}>
-                  {message.user_nickname}
-                </Typography>
-                <Typography color="white">{message.content}</Typography>
-                <Typography color="white">
-                  {new Date(message.timestamp).toLocaleString()}
-                </Typography>
-              </Paper>
+              <MessageCard message={message} key={message.id} />
             ))}
           </Box>
           <Paper

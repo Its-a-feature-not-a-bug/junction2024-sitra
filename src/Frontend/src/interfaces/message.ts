@@ -6,4 +6,8 @@ export interface Message {
   content: string;
   media_url: string;
   timestamp: string;
+  anger_score?: number;
+  emotional_intensity_score?: number;
+  bias_score?: number;
+  score_reason?: string;
 }

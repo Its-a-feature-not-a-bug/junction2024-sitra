@@ -8,12 +8,20 @@ import {
   styled,
   TextField,
 } from '@mui/material';
+import { setConversation } from '../../redux/slices/conversationSlice';
+import { useDispatch } from 'react-redux';
 
 const CreateConversation = () => {
   const [open, setOpen] = useState(false);
   const [conversationName, setConversationName] = useState('');
   const [description, setDescription] = useState('');
   const { token } = useAuth();
+  const dispatch = useDispatch();
+
+  const updateConversationList = async () => {
+    const response = await api.get('/api/conversations');
+    dispatch(setConversation(response.data));
+  };
 
   const handleCreateConversation = async () => {
     if (conversationName.trim().length < 3) {
@@ -36,6 +44,7 @@ const CreateConversation = () => {
       setConversationName('');
       setDescription('');
       setOpen(false);
+      updateConversationList();
     } catch (error) {
       console.error(error);
     }
@@ -90,7 +99,6 @@ const CreateConversation = () => {
             sx={{ marginBottom: 2, marginTop: 2 }}
             multiline
             rows={4}
-            maxRows={6}
           />
           <Button onClick={handleCreateConversation} variant="contained">
             Create Conversation

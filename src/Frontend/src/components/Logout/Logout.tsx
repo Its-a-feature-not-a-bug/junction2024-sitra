@@ -1,6 +1,5 @@
-// import React from 'react';
-import { useAuth } from "../../AuthContext";
-import { Button } from "@mui/material";
+import { useAuth } from '../../AuthContext';
+import { Button } from '@mui/material';
 
 const Logout = () => {
   const { logout } = useAuth();

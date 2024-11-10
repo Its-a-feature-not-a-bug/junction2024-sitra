@@ -83,10 +83,10 @@ const Login: React.FC = () => {
         >
           Anonymous Login
         </Typography>
-        {/* <Typography align="center">
+        <Typography align="center">
           Anonymous login reduces entry barriers, enhancing user engagement and
           privacy.
-        </Typography> */}
+        </Typography>
         <Box
           component="form"
           sx={{

@@ -1,11 +1,11 @@
-import React from 'react';
-import { jwtDecode } from 'jwt-decode';
-import { useAuth } from '../AuthContext';
-import { Box, Button, Container, Paper, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import Logout from '../components/Logout/Logout';
-import CreateConversation from '../components/CreateConversation/CreateConversation';
-import Conversations from '../components/Conversations/Conversations';
+import React from "react";
+import { jwtDecode } from "jwt-decode";
+import { useAuth } from "../AuthContext";
+import { Box, Button, Container, Paper, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import Logout from "../components/Logout/Logout";
+import CreateConversation from "../components/CreateConversation/CreateConversation";
+import Conversations from "../components/Conversations/Conversations";
 
 // Define the type for the JWT payload
 interface JwtPayload {
@@ -26,7 +26,7 @@ const Home: React.FC = () => {
       {nickname ? (
         <>
           <Typography variant="h5">
-            Hello, {nickname}! Welcome to the app.
+            Hello, {nickname}! Welcome to the FairVoice platform!
           </Typography>
           <Logout />
         </>
@@ -36,8 +36,8 @@ const Home: React.FC = () => {
             sx={{
               marginTop: 5,
               marginBottom: 5,
-              display: 'flex',
-              flexDirection: 'row',
+              display: "flex",
+              flexDirection: "row",
               gap: 4,
             }}
           >
@@ -50,25 +50,25 @@ const Home: React.FC = () => {
                 fontSize={42}
                 marginBottom={4}
               >
-                Discover new discussions fully anonymously
+                Discover New Discussions Fully Anonymously
               </Typography>
               <Button
                 variant="contained"
-                onClick={() => navigate('/login')}
+                onClick={() => navigate("/login")}
                 sx={{
-                  borderRadius: '18px',
-                  padding: '8px 35px',
-                  textTransform: 'none',
+                  borderRadius: "18px",
+                  padding: "8px 35px",
+                  textTransform: "none",
                 }}
               >
-                Login anonymously
+                Login Anonymously
               </Button>
             </Box>
             <Paper
               component="img"
               src="/img/people.webp"
               alt="People"
-              sx={{ flexGrow: 1, width: '50%' }}
+              sx={{ flexGrow: 1, width: "50%" }}
             />
           </Box>
         </>

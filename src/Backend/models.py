@@ -1,12 +1,12 @@
 from database import metadata
-from sqlalchemy import ForeignKey, Table, Column, Integer, String, TIMESTAMP, Text, func
+from sqlalchemy import Boolean, Table, Column, Integer, String, TIMESTAMP, Text, func
 
 conversations = Table(
   "conversations",
   metadata,
   Column("id", Integer, primary_key=True),
   Column("name", String(255)),
-  Column("is_group", Integer),
+  Column("is_group", Boolean),
   Column("creator_id", String(255)),
   Column("creator_nickname", String(55)),
   # Created_at timestamp with current timestamp
@@ -19,8 +19,8 @@ messages = Table(
     'messages', metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
     Column('conversation_id', Integer, nullable=False),
-    Column('user_id', Integer, nullable=False),
-    Column('user_nickname', Integer, nullable=False),
+    Column('user_id', String(255), nullable=False),
+    Column('user_nickname', String(55), nullable=False),
     Column('content', Text, nullable=False),
     Column('media_url', Text, nullable=True),
     Column('timestamp', TIMESTAMP, default=func.now()),

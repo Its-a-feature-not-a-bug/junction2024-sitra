@@ -96,7 +96,7 @@ async def create_conversation(conversation: ConversationCreate, current_user: di
   query = conversations.insert().values(name=conversation.name, creator_id=current_user["user_id"], creator_nickname=current_user["nickname"] )
   return await database.execute(query)
 
-@app.get("/conversations/{conversation_id}", response_model=Dict)
+@app.get("/conversations/{conversation_id}")
 async def get_conversation(conversation_id: int):
     query = conversations.select().where(conversations.c.id == conversation_id)
     conversation_exists = await database.fetch_all(query)
@@ -105,11 +105,9 @@ async def get_conversation(conversation_id: int):
         raise HTTPException(status_code=404, detail="Conversation not found")
 
     query = messages.select().where(messages.c.conversation_id == conversation_id)
-    conversation_data = await database.fetch_all(query)
+    return await database.fetch_all(query)
 
-    return conversation_data
-
-@app.post("/conversations/{conversation_id}/messages", response_model=MessageCreate)
+@app.post("/conversations/{conversation_id}")
 async def send_message_to_conversation(
     conversation_id: int,
     message: MessageCreate,
@@ -118,24 +116,26 @@ async def send_message_to_conversation(
     # Check if the conversation exists
     query =  conversations.select().where(conversations.c.id == conversation_id)
     conversation = await database.fetch_one(query)
-    
+
     if not conversation:
         raise HTTPException(status_code=404, detail="Conversation not found")
-    
+
     # Insert the new message into the messages table
     query = (
         messages.insert()
         .values(
             conversation_id=conversation_id,
             user_id=current_user["user_id"],
+            user_nickname=current_user["nickname"],
             content=message.content,
         )
     )
     message_id = await database.execute(query)
-    
-    # Return the created message as confirmation (with an auto-generated ID)
 
-    
+    # Return the created message as confirmation (with an auto-generated ID)
+    return {"id": message_id }
+
+
 SITE_SECRET = os.getenv("SITE_SECRET")
 
 
@@ -157,10 +157,10 @@ def verify_recaptcha(captcha_value: str) -> bool:
 @app.post("/verify")
 async def verify(request: CaptchaResponse):
     captcha_value = request.captchaValue
-    
-    
+
+
     is_valid = verify_recaptcha(captcha_value)
-    
+
     if is_valid:
         return {"success": True, "message": "reCAPTCHA validation succeeded!"}
     else:

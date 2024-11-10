@@ -28,9 +28,9 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 origins = [
     "http://localhost:5173",
-    "https://junction2024-sitra-backend.onrender.com",  # Your frontend Render URL
- ]
- 
+    "https://junction2024-sitra-frontend.onrender.com/"
+]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,  # Allows requests from the specified origin

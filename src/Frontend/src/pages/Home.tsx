@@ -26,7 +26,7 @@ const Home: React.FC = () => {
       {nickname ? (
         <>
           <Typography variant="h5">
-            Hello, {nickname}! Welcome to the app.
+            Hello, {nickname}! Welcome to the FairVoice platform!
           </Typography>
           <Logout />
         </>
@@ -61,7 +61,7 @@ const Home: React.FC = () => {
                   textTransform: "none",
                 }}
               >
-                Login anonymously
+                Login Anonymously
               </Button>
             </Box>
             <Paper

@@ -12,14 +12,20 @@ import {
 const CreateConversation = () => {
   const [open, setOpen] = useState(false);
   const [conversationName, setConversationName] = useState('');
+  const [description, setDescription] = useState('');
   const { token } = useAuth();
 
   const handleCreateConversation = async () => {
+    if (conversationName.trim().length < 3) {
+      alert('Conversation name must be at least 3 characters long');
+      return;
+    }
     try {
       await api.post(
         '/api/conversations',
         {
-          name: conversationName,
+          title: conversationName.trim(),
+          description: description.trim(),
         },
         {
           headers: {
@@ -28,6 +34,8 @@ const CreateConversation = () => {
         }
       );
       setConversationName('');
+      setDescription('');
+      setOpen(false);
     } catch (error) {
       console.error(error);
     }
@@ -63,9 +71,26 @@ const CreateConversation = () => {
               style: { color: grey[400] },
             }}
             InputProps={{
-              style: { color: grey[50] },
+              style: { color: grey[50], backgroundColor: grey[800] },
             }}
             sx={{ marginBottom: 2, marginTop: 2 }}
+          />
+          <TextField
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            label="Description"
+            variant="outlined"
+            fullWidth
+            InputLabelProps={{
+              style: { color: grey[400] },
+            }}
+            InputProps={{
+              style: { color: grey[50], backgroundColor: grey[800] },
+            }}
+            sx={{ marginBottom: 2, marginTop: 2 }}
+            multiline
+            rows={4}
+            maxRows={6}
           />
           <Button onClick={handleCreateConversation} variant="contained">
             Create Conversation

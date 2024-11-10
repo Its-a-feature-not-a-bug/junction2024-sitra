@@ -9,20 +9,34 @@ from routes.auth import get_current_user
 router = APIRouter()
 
 class ConversationCreate(BaseModel):
-    name: str
+    title: str
+    description: str
 
 class MessageCreate(BaseModel):
     content: str
 
 @router.get("/conversations", tags=["conversations"])
 async def get_conversations():
-    query = conversations.select()
+    query = conversations.select().order_by(conversations.c.id.desc())
     return await database.fetch_all(query)
 
 @router.post("/conversations", tags=["conversations"])
 async def create_conversation(conversation: ConversationCreate, current_user: dict = Depends(get_current_user)):
+    title = conversation.title.strip()
+    description = conversation.description.strip()
+
+    if not title:
+        raise HTTPException(status_code=400, detail="Title is required")
+    # if title length is greater than 255 characters
+    if len(title) > 255:
+        raise HTTPException(status_code=400, detail="Title is too long")
+    # if description length is greater than 500 characters
+    if len(description) > 500:
+        raise HTTPException(status_code=400, detail="Description is too long")
+
     query = conversations.insert().values(
-        name=conversation.name,
+        title=title,
+        description=description,
         creator_id=current_user["user_id"],
         creator_nickname=current_user["nickname"]
     )

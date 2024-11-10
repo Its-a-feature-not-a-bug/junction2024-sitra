@@ -1,8 +1,11 @@
 import { AppBar, Box, Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../AuthContext';
 
 const Header = () => {
   const navigate = useNavigate();
+  const { token, logout } = useAuth();
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -25,19 +28,35 @@ const Header = () => {
         >
           FairVoice
         </Typography>
-        <Button
-          variant="contained"
-          sx={{
-            borderRadius: '12px',
-            padding: '8px 20px',
-            background: 'white',
-            color: 'black',
-            textTransform: 'none',
-          }}
-          onClick={() => navigate('/login')}
-        >
-          Login
-        </Button>
+        {!token ? (
+          <Button
+            variant="contained"
+            sx={{
+              borderRadius: '12px',
+              padding: '8px 20px',
+              background: 'white',
+              color: 'black',
+              textTransform: 'none',
+            }}
+            onClick={() => navigate('/login')}
+          >
+            Login
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            sx={{
+              borderRadius: '12px',
+              padding: '8px 20px',
+              background: 'white',
+              color: 'black',
+              textTransform: 'none',
+            }}
+            onClick={() => logout()}
+          >
+            Log out
+          </Button>
+        )}
       </AppBar>
     </Box>
   );

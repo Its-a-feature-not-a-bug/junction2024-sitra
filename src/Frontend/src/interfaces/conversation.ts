@@ -1,6 +1,7 @@
 export interface Conversation {
   id: number;
-  name: string;
+  title: string;
+  description: string;
   is_group: boolean;
   cretor_id: string;
   cretor_nickname: string;

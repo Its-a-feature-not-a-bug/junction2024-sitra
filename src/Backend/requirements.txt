@@ -2,8 +2,10 @@ annotated-types==0.7.0
 anyio==4.6.2.post1
 asyncmy==0.2.9
 certifi==2024.8.30
+cffi==1.17.1
 charset-normalizer==3.4.0
 click==8.1.7
+cryptography==43.0.3
 databases==0.9.0
 distro==1.9.0
 dnspython==2.7.0
@@ -25,6 +27,7 @@ MarkupSafe==3.0.2
 mdurl==0.1.2
 openai==1.54.3
 pyasn1==0.6.1
+pycparser==2.22
 pydantic==2.9.2
 pydantic_core==2.23.4
 Pygments==2.18.0

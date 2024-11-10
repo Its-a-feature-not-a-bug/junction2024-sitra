@@ -3,10 +3,9 @@ import api from '../../axiosConfig';
 import {
   Box,
   CircularProgress,
-  List,
-  ListItem,
-  ListItemText,
   Typography,
+  Grid2 as Grid,
+  Paper,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Conversation } from '../../interfaces/conversation';
@@ -29,22 +28,30 @@ const Conversations = () => {
   return (
     <Box>
       <Typography variant="h4" sx={{ fontWeight: 500, marginBottom: 2 }}>
-        Featured onversations
+        Featured conversations
       </Typography>
       {loading ? (
         <CircularProgress />
       ) : (
-        <List>
+        <Grid container spacing={2}>
           {conversations.map((conversation) => (
-            <ListItem
-              key={conversation.id}
-              onClick={() => navigate(`/conversation/${conversation.id}`)}
-              sx={{ cursor: 'pointer' }}
-            >
-              <ListItemText primary={conversation.name} />
-            </ListItem>
+            <Grid item size={{ xs: 12, md: 6, lg: 4 }}>
+              <Paper
+                onClick={() => navigate(`/conversation/${conversation.id}`)}
+                sx={{
+                  cursor: 'pointer',
+                  padding: 4,
+                  minHeight: 100,
+                  background: 'rgb(50,50,50)',
+                  borderRadius: 8,
+                  color: 'white',
+                }}
+              >
+                <Typography variant="h6">{conversation.title}</Typography>
+              </Paper>
+            </Grid>
           ))}
-        </List>
+        </Grid>
       )}
     </Box>
   );

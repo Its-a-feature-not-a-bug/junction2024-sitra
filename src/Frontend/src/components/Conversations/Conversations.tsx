@@ -35,7 +35,7 @@ const Conversations = () => {
       ) : (
         <Grid container spacing={2}>
           {conversations.map((conversation) => (
-            <Grid item size={{ xs: 12, md: 6, lg: 4 }}>
+            <Grid size={{ xs: 12, md: 6, lg: 4 }}>
               <Paper
                 onClick={() => navigate(`/conversation/${conversation.id}`)}
                 sx={{

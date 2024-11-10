@@ -113,6 +113,9 @@ const ConversationPage = () => {
               variant="contained"
               sx={{ mt: 2 }}
               onClick={() => {
+                if (sendMessage.trim() === '') {
+                  return;
+                }
                 api
                   .post(
                     `/api/conversations/${conversation_id}`,

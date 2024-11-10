@@ -7,12 +7,14 @@ from pydantic import BaseModel
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
 import uuid
+from textAnalyser import analyze_text
 from database import engine, database, metadata
 from models import conversations, messages
 import os
 from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
 from dotenv import load_dotenv
+import asyncio
 
 load_dotenv()
 metadata.create_all(bind=engine)
@@ -134,7 +136,7 @@ async def send_message_to_conversation(
         )
     )
     message_id = await database.execute(query)
-
+    asyncio.create_task(analyze_text(message.content, message_id))
     # Return the created message as confirmation (with an auto-generated ID)
     return {"id": message_id }
 

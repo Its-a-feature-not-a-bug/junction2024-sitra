@@ -19,7 +19,7 @@ const Conversations = () => {
 
   useEffect(() => {
     const fetchConversations = async () => {
-      const response = await api.get('/conversations');
+      const response = await api.get('/api/conversations');
       setConversations(response.data);
       setLoading(false);
     };

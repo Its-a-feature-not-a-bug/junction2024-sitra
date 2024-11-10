@@ -20,7 +20,7 @@ const Conversation = () => {
   const { token } = useAuth();
 
   const loadMessages = () => {
-    api.get(`/conversations/${conversation_id}`).then((data) => {
+    api.get(`/api/conversations/${conversation_id}`).then((data) => {
       setMessages(data.data);
       setLoading(false);
     });

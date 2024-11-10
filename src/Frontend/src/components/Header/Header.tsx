@@ -1,9 +1,10 @@
 import { AppBar, Box, Button, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { token, logout } = useAuth();
 
   return (
@@ -28,7 +29,7 @@ const Header = () => {
         >
           FairVoice
         </Typography>
-        {!token ? (
+        {!token && location.pathname !== '/login' && (
           <Button
             variant="contained"
             sx={{
@@ -42,7 +43,8 @@ const Header = () => {
           >
             Login
           </Button>
-        ) : (
+        )}
+        {token && (
           <Button
             variant="contained"
             sx={{

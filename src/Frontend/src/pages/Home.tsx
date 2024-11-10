@@ -1,11 +1,11 @@
-import React from 'react';
-import { jwtDecode } from 'jwt-decode';
-import { useAuth } from '../AuthContext';
-import { Box, Button, Container, Paper, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import Logout from '../components/Logout/Logout';
-import CreateConversation from '../components/CreateConversation/CreateConversation';
-import Conversations from '../components/Conversations/Conversations';
+import React from "react";
+import { jwtDecode } from "jwt-decode";
+import { useAuth } from "../AuthContext";
+import { Box, Button, Container, Paper, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import Logout from "../components/Logout/Logout";
+import CreateConversation from "../components/CreateConversation/CreateConversation";
+import Conversations from "../components/Conversations/Conversations";
 
 // Define the type for the JWT payload
 interface JwtPayload {
@@ -23,50 +23,49 @@ const Home: React.FC = () => {
 
   return (
     <Container sx={{ padding: 2 }}>
-    <Container sx={{ padding: 2 }}>
-      {nickname ? (
-        <>
-        <>
-          <Typography variant="h5">
-            Hello, {nickname}! Welcome to the app.
-          </Typography>
-          <Logout />
-        </>
-        </>
-      ) : (
-        <>
-          <Box
-            sx={{
-              marginTop: 5,
-              display: 'flex',
-              flexDirection: 'row',
-              gap: 4,
-            }}
-          >
-            <Typography
-              variant="h3"
-              color="white"
-              fontWeight={500}
-              sx={{ marginTop: 3 }}
+      <Container sx={{ padding: 2 }}>
+        {nickname ? (
+          <>
+            <>
+              <Typography variant="h5">
+                Hello, {nickname}! Welcome to the app.
+              </Typography>
+              <Logout />
+            </>
+          </>
+        ) : (
+          <>
+            <Box
+              sx={{
+                marginTop: 5,
+                display: "flex",
+                flexDirection: "row",
+                gap: 4,
+              }}
             >
-              Discover new discussions and engage in converersations
-            </Typography>
-            <Paper
-              component="img"
-              src="/img/people.webp"
-              alt="People"
-              sx={{ flexGrow: 1, width: '50%' }}
-            />
-          </Box>
-          <Button variant="contained" onClick={() => navigate('/login')}>
-            Login
-          </Button>
-        </>
-        </>
-      )}
-      <CreateConversation />
-      <Conversations />
-    </Container>
+              <Typography
+                variant="h3"
+                color="white"
+                fontWeight={500}
+                sx={{ marginTop: 3 }}
+              >
+                Discover new discussions and engage in converersations
+              </Typography>
+              <Paper
+                component="img"
+                src="/img/people.webp"
+                alt="People"
+                sx={{ flexGrow: 1, width: "50%" }}
+              />
+            </Box>
+            <Button variant="contained" onClick={() => navigate("/login")}>
+              Login
+            </Button>
+          </>
+        )}
+        <CreateConversation />
+        <Conversations />
+      </Container>
     </Container>
   );
 };

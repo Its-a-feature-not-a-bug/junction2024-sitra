@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material';
 import Layout from './components/Layout/Layout';
+import Conversation from './pages/Conversation';
 
 const App: React.FC = () => {
   const router = createBrowserRouter([
@@ -21,6 +22,14 @@ const App: React.FC = () => {
       element: (
         <Layout>
           <Login />
+        </Layout>
+      ),
+    },
+    {
+      path: '/conversation/:conversation_id',
+      element: (
+        <Layout>
+          <Conversation />
         </Layout>
       ),
     },

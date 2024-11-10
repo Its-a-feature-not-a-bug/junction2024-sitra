@@ -5,7 +5,7 @@ import api from '../../axiosConfig';
 const CreateConversation = () => {
   const [conversationName, setConversationName] = useState('');
   const { token } = useAuth();
-  console.log({ token });
+
   const handleCreateConversation = async () => {
     try {
       await api.post(

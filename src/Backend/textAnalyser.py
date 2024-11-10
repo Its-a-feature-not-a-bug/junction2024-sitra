@@ -14,7 +14,6 @@ async def update_message_scores(message_id: int, analysis_json: any):
     emotional_intensity = analysis_json["emotional_intensity"]
     bias = analysis_json["bias"]
     reason = analysis_json["reason"]
-    print(anger, emotional_intensity, bias, reason)
     query = (
         messages.update()
         .where(messages.c.id == message_id)
@@ -39,8 +38,6 @@ async def analyze_text(text: str, message_id: int):
         '{ "anger": 0-100, "emotional_intensity": 0-100, "bias": 0-100, "reason": "reasoning (use single quatas in reasoning)" }\n'
     )
 
-    print(prompt)
-
     response = client.chat.completions.create(
         model="gpt-4o-mini",  # Specify the engine
         messages=[
@@ -50,10 +47,7 @@ async def analyze_text(text: str, message_id: int):
     )
 
     analysis = response.choices[0].message.content
-    print(analysis)
-
     analysis_json = json.loads(analysis)
-    print(analysis_json)
     await update_message_scores(message_id, analysis_json)
 
 

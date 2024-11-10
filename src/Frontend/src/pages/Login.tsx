@@ -1,8 +1,8 @@
-import React, { useRef, useState } from "react";
-import { useAuth } from "../AuthContext";
-import { useNavigate } from "react-router-dom";
-import api from "../axiosConfig";
-import ReCAPTCHA from "react-google-recaptcha";
+import React, { useEffect, useRef, useState } from 'react';
+import { useAuth } from '../AuthContext';
+import { useNavigate } from 'react-router-dom';
+import api from '../axiosConfig';
+import ReCAPTCHA from 'react-google-recaptcha';
 import {
   Box,
   Button,
@@ -10,47 +10,52 @@ import {
   TextField,
   Typography,
   Paper,
-  CircularProgress,
-} from "@mui/material";
+} from '@mui/material';
 
 const Login: React.FC = () => {
   const recaptcha = useRef<ReCAPTCHA | null>(null);
-  const [nickname, setNickname] = useState<string>("");
+  const [nickname, setNickname] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const { setToken } = useAuth();
+  const { setToken, token } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (token) {
+      navigate('/');
+    }
+  }, [token, navigate]);
 
   const handleLogin = async () => {
     const captchaValue = recaptcha.current?.getValue();
     if (!captchaValue) {
-      alert("Please verify the reCAPTCHA!");
+      alert('Please verify the reCAPTCHA!');
       return;
     }
 
     if (!nickname.trim()) {
-      alert("Nickname is required!");
+      alert('Nickname is required!');
       return;
     }
 
     setLoading(true);
     try {
-      const verifyRes = await api.post("/verify", {
+      const verifyRes = await api.post('/verify', {
         captchaValue,
       });
 
       if (verifyRes.data.success) {
-        const response = await api.post("/login/anonymous", {
+        const response = await api.post('/login/anonymous', {
           nickname,
         });
         const accessToken = response.data.access_token;
         setToken(accessToken);
-        navigate("/");
+        navigate('/');
       } else {
-        alert("reCAPTCHA validation failed!");
+        alert('reCAPTCHA validation failed!');
       }
     } catch (error) {
-      console.error("Login failed:", error);
-      alert("An error occurred during login.");
+      console.error('Login failed:', error);
+      alert('An error occurred during login.');
     }
     setLoading(false);
   };
@@ -61,11 +66,15 @@ const Login: React.FC = () => {
         <Typography variant="h4" component="h1" align="center" gutterBottom>
           Anonymous Login
         </Typography>
+        <Typography align="center">
+          Anonymous login reduces entry barriers, enhancing user engagement and
+          privacy.
+        </Typography>
         <Box
           component="form"
           sx={{
-            display: "flex",
-            flexDirection: "column",
+            display: 'flex',
+            flexDirection: 'column',
             gap: 2,
             marginTop: 2,
           }}
@@ -93,7 +102,7 @@ const Login: React.FC = () => {
             disabled={loading}
             size="large"
           >
-            {loading ? <CircularProgress size={24} /> : "Login"}
+            Login
           </Button>
         </Box>
       </Paper>

@@ -34,6 +34,7 @@ fastapi dev main.py
 DATABASE_URL=mysql+asyncmy://username:password@url:port/database
 SITE_SECRET={recaptcha_site_secret}
 OPENAI_API_KEY={openai_api_key}
+JWT_SECRET={jwt_secret}
 ```
 
 ### Frontend Setup
